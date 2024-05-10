@@ -1,13 +1,32 @@
 h1{
     text-align:center;
 }
+body{
+    background:rgb(225, 30, 118);
+    color:white
+}
+#thisForm{
+    width:300px;
+    display:flex;
+    flex-direction:column;
+}
+.charac{
+    display:flex;
+    justify-content:space-between;
+}
+.del{
+    height:30px;
+    padding:10px;
+    border-radius:30px;
+}
 .movieData{
-    /* display:flex;
+    display:flex;
     flex-wrap:wrap;
-    gap:15px; */
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(250px, 1fr));
     gap:15px;
+    justify-content:center;
+    /* display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(250px, 1fr));
+    gap:15px; */
 }
 #imgContainer{
     box-shadow:0 2px 5px;
