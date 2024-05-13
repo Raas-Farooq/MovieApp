@@ -42,9 +42,17 @@ function showImages(mySuccess){
                 const detail = document.createElement('div');
                 const myImg = document.createElement('img');
                 const name = document.createElement('h5');
+
+                // Edit Button
+                const edit = document.createElement('button');
+                edit.className = 'edit';
+                edit.textContent = 'Edit';
+
+                // delete Button
                 const del = document.createElement('button');
                 del.className = 'del';
                 del.textContent = 'Delete';
+                
                 card.className = 'imgParent';
                 imgHold.className = 'imgContainer';
                 card.id = success._id;
@@ -56,6 +64,7 @@ function showImages(mySuccess){
                 detail.className = 'charac';
                 detail.append(name);
                 detail.append(del);
+                detail.append(edit);
                 imgHold.append(myImg);
                 card.append(imgHold);
                 card.append(detail);
@@ -140,7 +149,12 @@ movie.addEventListener('click', e => {
         }
     })
     }
-
+    if(e.target.classList.contains('edit')){
+        console.log("parent: in Edit", e.target.parentElement.parentElement);
+        const custom = e.target.parentElement.parentElement.id;
+        console.log("custom: ", custom);
+        window.location.href= `./EditMovie.html?id=${custom}`
+    }
     
 })
 // Searching A MOvie
@@ -158,16 +172,33 @@ myForm.addEventListener('submit', e => {
         imageContainer.removeChild(imageContainer.firstChild)
     }
     // imageContainer.innerHTML = '';
+    const myList = [];
+    let completeData;
     console.log("form Submitted");
     console.log("Your Search: ", userSearch);
     fetch(`http://localhost:3003/movies/api/getSearch?search=${userSearch}`).
     then(response => response.json()).
     then(data => {
         console.log("Onlyy data for Search : ",data);
-        console.log("Search Result in FrontEnd: ",data[0].results);
-        showImages(data);
+        completeData = data;
+        console.log("image: ",data[0].results[0].backdrop_path);
+        console.log("Name: ",data[0].results[0].title);
+        console.log("id: ",data[0].results[0].id);
+        data[0].results.map((res,i) => {
+            console.log("id under Complete: ",res.id);
+            console.log("names under Complete: ",res.title);
+            console.log("images under Complete: ",res.backdrop_path);
+            myList.push({
+                id: res.id,
+                image:res.backdrop_path,
+                name:res.title
+            })
+        })
+        
     }).
     catch(err => console.log("you can PUt more effort: ", err))
+    
+    showImages(myList);
     search.value = '';
     userSearch = ''
 

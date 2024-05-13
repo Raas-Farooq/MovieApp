@@ -15,9 +15,27 @@ body{
     justify-content:space-between;
 }
 .del{
-    height:30px;
+    /* height:30px; */
     padding:10px;
     border-radius:30px;
+}
+.edit{
+    padding: 10px;
+    border-radius: 30px;
+    cursor:pointer;
+}
+.home{
+    padding: 10px;
+    border-radius: 30px;
+    cursor:pointer;
+}
+.nameBtn{
+    display:flex;
+    gap:50px;
+}
+.editContent{
+    display:flex;
+    gap:50px;
 }
 .movieData{
     display:flex;

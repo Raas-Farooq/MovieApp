@@ -121,7 +121,7 @@ const searching = async (req,res) => {
         
 }
 
-
+// Adding MOvie
 const addMovie = async (req, res) => {
 
     try{
@@ -148,5 +148,52 @@ const addMovie = async (req, res) => {
         console.log("This is the err: ", err);
     }
 }
+//get Editing Movie
 
-export default {loadAll, searching,addMovie, deleteMovie};
+const getEditMovie = async(req,res) => {
+    try{
+        const myId = req.query.id;
+        const findId= await movies.moviesModel.findOne({_id:myId});
+        
+        if(findId){
+           
+            res.send(findId)
+        }
+        else{
+            console.log("Believe And Try Harder")
+            res.json({message:"Try HaRDER In sha Allah"})
+        }
+    }
+    catch(err){
+        res.status(500).json({err:err.message})
+    }
+}
+// Editing the MOvie
+
+const editing = async(req,res) => {
+    try{
+        const myId = req.params.id;
+        const findId= await movies.moviesModel.findOne({_id:myId});
+        const myData = req.body;
+        console.log("this is the req Body:- MyDATA: ", myData);
+        if(findId){
+            const updated = await movies.moviesModel.findAndUpdateOne({_id:myId}, {$set:{myData}});
+            if(updated){
+                console.log("Successfully Changed")
+                res.send({message:"SUCCESS AL GHAFFAR"})
+            }
+           else{
+            console.log("BE Patient")
+            res.send({message:"Al MUTAKABIR"})
+           }
+        }
+        else{
+            console.log("ID is Not Found")
+            res.json({message:"Are You Deliberate"})
+        }
+    }
+    catch(err){
+        res.status(500).json({err:err.message})
+    }
+}
+export default {loadAll, searching,addMovie, deleteMovie, getEditMovie, editing};
