@@ -174,13 +174,13 @@ const editing = async(req,res) => {
     try{
         const myId = req.params.id;
         const findId= await movies.moviesModel.findOne({_id:myId});
-        const myData = req.body;
-        console.log("this is the req Body:- MyDATA: ", myData);
+        const {image, name} = req.body;
+        // console.log("this is the req Body:- MyDATA: ", myData);
         if(findId){
-            const updated = await movies.moviesModel.findAndUpdateOne({_id:myId}, {$set:{myData}});
+            const updated = await movies.moviesModel.findOneAndUpdate({_id:myId}, {$set:{image:image, name:name}});
             if(updated){
                 console.log("Successfully Changed")
-                res.send({message:"SUCCESS AL GHAFFAR"})
+                res.send(updated)
             }
            else{
             console.log("BE Patient")

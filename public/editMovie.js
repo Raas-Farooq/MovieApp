@@ -1,15 +1,22 @@
 const home = document.querySelector('.home');
+const responseBtn = document.querySelector('.responseBtn');
 const editingContainer = document.querySelector('.editingContainer');
 home.addEventListener('click', e => {
+    console.log("Home is clicked")
     window.location.href='./movies.html';   
 })
 let movieId;
+
+const urlSearch = new URLSearchParams(window.location.search);
+const urlSearchParams = new URLSearchParams(window.location.search);
+
+movieId = urlSearch.get('id');
 document.addEventListener('DOMContentLoaded', e => {
     console.log("I'm Loaded");
-    const urlSearch = new URLSearchParams(window.location.search);
-    const urlSearchParams = new URLSearchParams(window.location.search);
+    // const urlSearch = new URLSearchParams(window.location.search);
+    // const urlSearchParams = new URLSearchParams(window.location.search);
 
-    movieId = urlSearch.get('id');
+    // movieId = urlSearch.get('id');
     console.log('movieId received: ', movieId);
 
     fetch(`http://localhost:3003/movies/api/getEdit?id=${movieId}`)
@@ -65,6 +72,7 @@ movieImage.addEventListener('input', e => {
 
 
 editMovie.addEventListener('click', e => {
+    e.preventDefault();
     const id = movieId;
     console.log("THis is the id after edit click: ", id);
     const movieData = {
@@ -74,7 +82,7 @@ editMovie.addEventListener('click', e => {
     } 
 
     fetch(`http://localhost:3003/movies/api/editingMovie/${id}`, {
-        method:PUT,
+        method:"PUT",
         headers:{
             "Content-Type":"application/json"
         },
@@ -82,9 +90,27 @@ editMovie.addEventListener('click', e => {
     }).then(response => response.json())
     .then(data => {
         console.log(" Allah(SWT) forgive us in PUt: ",data);
+        const myBtn = document.createElement('button');
+        const message = document.createElement('h4');
+        message.textContent = 'Movie Is Successfully Updated, Go Back To Home and See Changes'
+        myBtn.className = 'goBack';
+        myBtn.textContent = 'Go HOME';
+        while(editingContainer.firstChild){
+            editingContainer.removeChild(editingContainer.firstChild)
+        }
+        editingContainer.append(message);
+        editingContainer.append(myBtn);
+        const home = document.querySelector('.goBack');
+        home.addEventListener('click', e => {
+        console.log("Home is clicked")
+        window.location.href='./movies.html';   
+})
     })
     .catch(err =>console.log("Purify from All Mistakes: ", err))
 
-    movieName = '';
-    movieImage = ''; 
+    movieName.value = '';
+    movieImage.value = ''; 
+
+   
+
 })
