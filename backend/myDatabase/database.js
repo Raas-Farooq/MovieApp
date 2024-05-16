@@ -1,9 +1,13 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
+dotenv.config();
+
+console.log('befor mongo Connection MONGODB_URI:', process.env.MONGODB_URI);
 
 const fight = async () => {
     try{
-        await mongoose.connect('mongodb://localhost:27017/MoviesDb',
+        await mongoose.connect(process.env.MONGODB_URI,
         {
             useNewUrlParser:true,
             useUnifiedTopology:true
