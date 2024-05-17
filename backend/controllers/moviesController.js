@@ -32,15 +32,15 @@ const loadAll = async (req,res) => {
                         const newImage = success.name;
                         const newName = success.image;
                         // let correctId = mongoose.Types.ObjectId(id);
-                        const updated = await movies.moviesModel.findByIdAndUpdate({_id: success._id},
-                             {$set:{name:image, image:name}}, {new:true});
-                        console.log("updated ", updated);
-                        if(updated){
-                            console.log(`successfully updated Image: ${newImage} and Name :${newName} `);
-                        }
-                        else{
-                            console.log(`Unable To Update`);
-                        }
+                        // const updated = await movies.moviesModel.findByIdAndUpdate({_id: success._id},
+                        //      {$set:{name:image, image:name}}, {new:true});
+                        // console.log("updated ", updated);
+                        // if(updated){
+                        //     console.log(`successfully updated Image: ${newImage} and Name :${newName} `);
+                        // }
+                        // else{
+                        //     console.log(`Unable To Update`);
+                        // }
                        
                     }
                  }
@@ -58,7 +58,7 @@ const loadAll = async (req,res) => {
                         image: success.backdrop_path
                         
                     }]
-                        promises.push(moviesModel.insertMany(myObj));
+                        promises.push(movies.moviesModel.insertMany(myObj));
                     })
                 }
                 await Promise.all(promises);

@@ -12,7 +12,7 @@ const fight = async () => {
             useNewUrlParser:true,
             useUnifiedTopology:true
         }).then(() => {
-            console.log("is Mongoose Connected")
+            console.log("Mongoose AND Atlas")
         }).catch((err) => {
             console.log("Something has Gone Wrong: ", err);
         })

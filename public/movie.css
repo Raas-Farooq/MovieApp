@@ -24,6 +24,9 @@ body{
     border-radius: 30px;
     cursor:pointer;
 }
+.names{
+    font-size:12px;
+}
 .home{
     padding: 10px;
     border-radius: 30px;

@@ -60,9 +60,30 @@ function showImages(mySuccess){
                 // name.style.textAlign="center"
 
                 myImg.src = `https://image.tmdb.org/t/p/w500/${success.image}`;
-                name.textContent = success.name;
+                console.log('Name length: ', success.name.length);
+                if(success.name.length > 30 ){
+                    const words = success.name.split(' ');
+                    const first4 = words.slice(0,4).join(' ');
+                    const last = words.slice(4, words.length).join(' ');
+                    const secondName = document.createElement('h5');
+                    name.textContent = first4;
+                    secondName.textContent = last;
+                    name.textContent = success.name;
+                    const names = document.createElement('div');
+                    names.className="names";
+                    names.append(name);
+                    names.append(secondName);
+                    detail.append(names);
+                }
+                else{
+                    name.textContent = success.name;
+                    detail.append(name);
+                }
+               
+                console.log('Name Substring: ', success.name.substring(10))
+                
                 detail.className = 'charac';
-                detail.append(name);
+                
                 detail.append(del);
                 detail.append(edit);
                 imgHold.append(myImg);
@@ -195,10 +216,14 @@ myForm.addEventListener('submit', e => {
             })
         })
         
+        if(myList.length){
+            showImages(myList);
+        }
+        
     }).
     catch(err => console.log("you can PUt more effort: ", err))
     
-    showImages(myList);
+    
     search.value = '';
     userSearch = ''
 
