@@ -83,16 +83,14 @@ const deleteMovie = async (req,res) => {
         const movie = await movies.moviesModel.findOne({_id:id});
         if(!movie){
             console.log("Id not found");
-            res.json({message:"Believe and Send another ID"})
+            return res.json({message:"Believe and Send another ID"})
         }
         else{
             const deleted = await movies.moviesModel.deleteOne({_id:id});
             console.log("what is deleted", deleted)
-            if(deleted){
-                console.log("Believe in Allah(SWT) ")
-            }
+            if(!deleted) return res.status(404).json({success:false, message:"unable to delete the movie"});
             else{
-                console.log("You might have Weak Faith")
+                return res.status(200).json({success:true, message:"Successfully Deleted the item", item:deleted});
             }
         }
     }
@@ -175,22 +173,13 @@ const editing = async(req,res) => {
         const myId = req.params.id;
         const findId= await movies.moviesModel.findOne({_id:myId});
         const {image, name} = req.body;
-        // console.log("this is the req Body:- MyDATA: ", myData);
-        if(findId){
-            const updated = await movies.moviesModel.findOneAndUpdate({_id:myId}, {$set:{image:image, name:name}});
-            if(updated){
-                console.log("Successfully Changed")
-                res.send(updated)
+       if(!findId) return res.status(401).json({success:false, message:"Movie Not found"});
+      
+            const updated = await movies.moviesModel.findOneAndUpdate({_id:myId}, {$set:{image:image, name:name}}, {new:true);
+            if(!updated){
+              return res.status(404).json({success:false, message:"Unsuccessful Updation Operation"}) 
             }
-           else{
-            console.log("BE Patient")
-            res.send({message:"Al MUTAKABIR"})
-           }
-        }
-        else{
-            console.log("ID is Not Found")
-            res.json({message:"Are You Deliberate"})
-        }
+            return res.status(200).json({success:true, message:"Successfully edited the Movie"})
     }
     catch(err){
         res.status(500).json({err:err.message})
